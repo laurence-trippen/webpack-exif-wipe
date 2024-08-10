@@ -5,11 +5,18 @@
   "main": "src/webpack-exif-wipe.js",
   "scripts": {
     "start": "node src/webpack-exif-wipe.js",
-     "dev": "nodemon src/webpack-exif-wipe.js"
+    "dev": "nodemon src/webpack-exif-wipe.js",
+    "test": "node --test tests/"
   },
   "author": "Laurence Trippen",
   "license": "ISC",
   "devDependencies": {
+    "chalk": "^4.1.2",
     "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "exifremove": "^1.0.1",
+    "webpack": "^5.93.0",
+    "webpack-sources": "^3.2.3"
   }
 }

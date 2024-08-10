@@ -17,18 +17,18 @@ describe("RegexUtils", () => {
     assert.strictEqual(result, true);
   });
 
+  test(".tiff is NOT exif compatible", (t) => {
+    const result = isExifCompatibleFile("name.tiff");
+    
+    assert.strictEqual(result, false);
+  });
+
   test(".png is NOT exif compatible", (t) => {
     const result = isExifCompatibleFile("name.png");
 
     assert.strictEqual(result, false);
   });
-
-  test(".tiff is exif compatible", (t) => {
-    const result = isExifCompatibleFile("name.tiff");
-
-    assert.strictEqual(result, true);
-  });
-
+  
   test(".gif is NOT exif compatible", (t) => {
     const result = isExifCompatibleFile("name.gif");
 

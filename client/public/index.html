@@ -6,6 +6,16 @@
   <title>Webpack Exif Wipe Plugin</title>
 </head>
 <body>
-  <h1>Hello</h1>
+  <div class="img-preview">
+    <div>
+      <h1>Cleaned Output Image</h1>
+      <img id="cleaned-img" src="<%= require('../img/exif-test.jpg') %>" alt="">
+    </div>
+
+    <div>
+      <h2>Exif Data</h2>
+      <pre id="exif-data"></pre>
+    </div>
+  </div>
 </body>
 </html>

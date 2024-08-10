@@ -1,24 +1,36 @@
-// Node.js Core Modules
-const fs = require('fs');
-const path = require('path');
-
 // NPM Packages
-const exifRemove = require('exif-remove');
-const { RawSource } = require('webpack-sources');
+const chalk = require("chalk");
+const exifremove = require('exifremove');
+const { RawSource } = require("webpack-sources");
+
+// My Modules
+const { isExifCompatibleFile } = require("./utils/regexUtils");
 
 
 class WebpackExifWipePlugin {
+
   apply(compiler) {
-    compiler.hooks.emit.tapAsync('RemoveExifDataPlugin', (compilation, callback) => {
-      const assets = Object.keys(compilation.assets);
+    const prefix = chalk.blue("[WebpackExifWipePlugin] ");
 
-      assets.forEach((asset) => {
-        if (/\.(jpe?g|png|tiff)$/i.test(asset)) {
-          const assetSource = compilation.assets[asset].source();
-          const buffer = Buffer.from(assetSource, 'utf8');
-          const newBuffer = exifRemove(buffer);
+    console.log(prefix + "Loaded");
 
-          compilation.assets[asset] = new RawSource(newBuffer);
+    compiler.hooks.emit.tapAsync('WebpackExifWipePlugin', (compilation, callback) => {
+      const assetNames = Object.keys(compilation.assets);
+
+      console.log(prefix + "assets:", assetNames);
+
+      assetNames.forEach((assetName) => {
+        if (isExifCompatibleFile(assetName)) {
+          const assetSource = compilation.assets[assetName].source();
+
+          console.log(prefix + "Asset Name:", assetName);
+          console.log(prefix + "Asset Source: ", assetSource);
+
+          const cleanedExifBuffer = exifremove.remove(assetSource);
+
+          console.log(prefix + "cleaned:", cleanedExifBuffer);
+
+          compilation.assets[assetName] = new RawSource(cleanedExifBuffer);
         }
       });
 
